@@ -1,0 +1,129 @@
+
+/* parallax effect with images */
+.img1, .img2, .img3 {
+	position: relative;
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.img1 {
+	background-image: url("../Assets/nyc_skyline.jpg");	
+	/*min-height: 300px;*/
+	min-height: 100vh;
+	height: 100%;
+	opacity: 0.9;
+}
+.img2 {
+	background-image: url("../Assets/mountain_landscape.jpg");	
+	/*min-height: 500px;*/
+	min-height: 100vh;
+	opacity: 0.9;
+}
+.img3 {
+	background-image:url("../Assets/shanghai_skyline.jpg");
+	min-height: 100vh;
+	/*min-height: 600px;*/
+	opacity: 0.9;
+}
+/* Section Headers */
+.header1{
+	position: absolute;
+	left: 0;
+	top: 50px;
+	width: 100%;
+	text-align: center;
+}
+.header2{
+	position: absolute;
+	left: 0;
+	top: 150px;
+	width: 100%;
+	text-align: center;
+}
+.header3{
+	position: absolute;
+	left: 0;
+	top: 10%;
+	width: 100%;
+	text-align: center;
+}
+.header4{
+	position: absolute;
+	left: 0;
+	top: 10%;
+	width: 100%;
+	text-align: center;
+}
+.header1 span.border{
+	font-size: 30px;
+	background-color: #111;
+	color: #fff;
+	padding: 18px;
+	letter-spacing: 3px;
+} 
+.header2 span.border, .header3 span.border, .header4 span.border{
+	font-size: 25px;
+	background-color: #111;
+	color: #fff;
+	padding: 18px;
+	letter-spacing: 1px;
+}
+/* Sections */
+.about{
+	position: absolute;
+	top: 25%;
+	text-align: justify;
+	left: 50px;
+	right: 50px;
+}
+.about div.border{
+	font-size: 14px;
+	background-color: #111;
+	color: #fff;
+	padding: 18px;
+	border-style: solid;
+  border-color: white;
+}
+.proj,.proj:link,.proj:visited{
+	position: absolute;
+	color: white;
+	background-color: #111;
+	left: 20px;
+	text-decoration: none;
+	padding: 10px;
+	border:none;
+	outline:none;
+}
+.proj:hover{
+	color: #f5993d;
+}
+.center{
+	margin-left:auto;
+	margin-right:auto;
+	display:inline-block;
+	width:40px;
+	height:40px;
+}
+.link-container{
+	position: absolute;
+	left: 0;
+	top: 30%;
+	width: 100%;
+	text-align: center;
+}
+.email{
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 100%;
+	text-align: center;
+}
+.email span.border{
+	font-size: 15px;
+	background-color: #111;
+	color: #fff;
+	padding: 18px;
+	letter-spacing: 1px;
+	font-family: Georgia, Times, serif;
+}

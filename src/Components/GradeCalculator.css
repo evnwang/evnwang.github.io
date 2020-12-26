@@ -1,0 +1,14 @@
+.calculator{
+	background-color: lightblue;
+	background-size: cover;
+	min-height: 100vh;
+	height: 100%;
+	font-family: Georgia, Times, serif;
+	padding-left: 10px;
+}
+select{
+	width: 60px;
+}
+button:hover{
+	opacity: 0.6;
+}
