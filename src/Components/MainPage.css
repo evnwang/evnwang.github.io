@@ -42,7 +42,6 @@
 .header3{
 	position: absolute;
 	left: 0;
-	top: 10%;
 	width: 100%;
 	text-align: center;
 }
@@ -68,33 +67,9 @@
 	letter-spacing: 1px;
 }
 /* Sections */
-.about{
-	position: absolute;
-	top: 25%;
-	text-align: justify;
-	left: 50px;
-	right: 50px;
-}
-.about div.border{
+.card{
+	background-color: #111;
 	font-size: 14px;
-	background-color: #111;
-	color: #fff;
-	padding: 18px;
-	border-style: solid;
-  border-color: white;
-}
-.proj,.proj:link,.proj:visited{
-	position: absolute;
-	color: white;
-	background-color: #111;
-	left: 20px;
-	text-decoration: none;
-	padding: 10px;
-	border:none;
-	outline:none;
-}
-.proj:hover{
-	color: #f5993d;
 }
 .center{
 	margin-left:auto;

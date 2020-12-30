@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, Col, Row, Card, Button } from "react-bootstrap";
 import github from "../Assets/github_icon.png";
 import linkedin from "../Assets/linkedin_icon.jpg";
 import { Link } from "react-router-dom";
@@ -27,41 +27,98 @@ export default function MainPage() {
         </div>
       </div>
       <div id="about" className="img2">
-        <div className="header3">
-          <span className="border">About Me</span>
-        </div>
-        <div className="about">
-          <div className="border">
-            <h5>Education</h5>
-            <ul>
-              <li>Rutgers University: B.S. Degree in Computer Science, Minor in Mathematics</li>
-              <li>Relevant Coursework: Linear Algebra, Data Structures, Databases, Design and Analysis of Alorgorithms, Computer Architecture, Software Methodology, Software Engineering, Data Science</li>
-            </ul>
-            <h5>Experience</h5>
-            <ul>
-              <li>Amazon.com, Inc. - Software Development Engineering Intern</li>
-              <li>Rutgers School of Social Work - Application Developer</li>
-            </ul>
-            <h5>Skills</h5>
-            <ul>
-              <li>Back-end and full-stack development</li>
-              <li>Java, Kotlin, Python, C, C#, Javascript, HTML/CSS, SQL</li>
-            </ul>
-            <h5>Interests/Hobbies</h5>
-            <ul>
-              <li>In my free time, I enjoy being active. I am a big sports fanatic as I both play and watch sports. I also like hiking and being around nature.</li>
-            </ul>
-          </div>
-        </div>
+        <Container fluid className="pt-5">
+          <Row className="pb-3">
+            <div className="header3">
+              <span className="border">About Me</span>
+            </div>
+          </Row>
+          <Row className="pt-5 pl-5 pr-5">
+            <Col>
+              <Card text="white" border="light">
+                <Card.Body>
+                  <Card.Title>Education</Card.Title>
+                  <ul>
+                    <li>Rutgers University: B.S. Degree in Computer Science, Minor in Mathematics</li>
+                    <li>Relevant Coursework: Linear Algebra, Data Structures, Databases, Design and Analysis of Alorgorithms, Computer Architecture, Software Methodology, Software Engineering, Data Science</li>
+                  </ul>
+                  <Card.Title>Experience</Card.Title>
+                  <ul>
+                    <li>Amazon.com, Inc. - Software Development Engineering Intern</li>
+                    <li>Rutgers School of Social Work - Application Developer</li>
+                  </ul>
+                  <Card.Title>Skills</Card.Title>
+                  <ul>
+                    <li>Back-end and full-stack development</li>
+                    <li>Java, Kotlin, Python, C, C#, Javascript, HTML/CSS, SQL</li>
+                    <li>Git, Jira, AWS, React, Unity </li>
+                  </ul>
+                  <Card.Title>Interests/Hobbies</Card.Title>
+                  <ul>
+                    <li>In my free time, I enjoy being active. I am a big sports fanatic as I both play and watch sports. I also like hiking and being around nature.</li>
+                  </ul>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </div>
       <div id="proj" className="img3">
-        <div className="header3">
-          <span className="border">Projects</span>
-        </div>
-        <a className="proj" style={{ top: "20%" }} href="https://customizablechess.web.app/" target="_blank" rel="noreferrer">Customizable Chess</a>
-        <a className="proj" style={{ top: "30%" }} href="https://github.com/fireteam99/buyme">BuyMe Auction Site</a>
-        <a className="proj" style={{ top: "40%" }} href="https://github.com/RGT123/PrinProgProject">Dog Matcher</a>
-        <Link className="proj" style={{ top: "50%" }} to="/gradecalculator">GPA Calculator</Link>
+        <Container fluid className="pt-5">
+          <Row className="pb-5">
+            <div className="header3">
+              <span className="border">Projects</span>
+            </div>
+          </Row>
+          <Row className="pt-3">
+            <Col md="6">
+              <Card style={{ height: "100%" }} text="white" border="light">
+                <Card.Body>
+                  <Card.Title>Customizable Chess</Card.Title>
+                  <Card.Text>Semester long project for Software Engineering. Our website allows you to play chess as well as customize your own boards for others to use. Built with React, Firebase, Express.js and Socket.IO</Card.Text>
+                  <Card.Link href="https://customizablechess.web.app/" target="_blank" rel="noreferrer">
+                    <Button>Check it out!</Button>
+                  </Card.Link>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md="6">
+              <Card style={{ height: "100%" }} text="white" border="light">
+                <Card.Body>
+                  <Card.Title>BuyMe</Card.Title>
+                  <Card.Text>Semester long project for Principles of Information & Data Management (Databases). Our website mimicks the functions of Ebay, including bidding, buying and selling, browsing and search, and account handling. Built with AWS EC2 instance, Java, JSP, MySQL and HTML/CSS.</Card.Text>
+                  <Card.Link href="https://github.com/fireteam99/buyme">
+                    <Button>See the repository.</Button>
+                  </Card.Link>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+          <Row className="pt-2 pb-2">
+            <Col md="6">
+              <Card style={{ height: "100%" }} text="white" border="light">
+                <Card.Body>
+                  <Card.Title>Dog Matcher</Card.Title>
+                  <Card.Text>Final project for Principles of Programming Languages. Our application finds you a dog that suits your personality traits. Built using Python, Flask and HTML/CSS.</Card.Text>
+                  <Card.Link href="https://github.com/RGT123/PrinProgProject">
+                    <Button>See the repository.</Button>
+                  </Card.Link>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md="6">
+              <Card style={{ height: "100%" }} text="white" border="light">
+                <Card.Body>
+                  <Card.Title>GPA Calculator</Card.Title>
+                  <Card.Text>Simple tool for calculating your GPA. Built when I started learning Javascript.</Card.Text>
+                  <Link to="/gradecalculator">
+                    <Button>Try it out!</Button>
+                  </Link>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </div>
       <div id="contact" className="img1">
         <div className="header4">
