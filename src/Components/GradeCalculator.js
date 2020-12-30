@@ -18,17 +18,20 @@ class GradeCalculator extends React.Component {
     super();
     this.state = {
       showModal: false,
+      currentGPA: null,
+      creditsEarned: null,
       numCourses: 0,
+      courseCredits: [],
+      courseGrades: [],
       gpa: "",
       isInvalid: Array(3).fill(false),
+      courseCreditsIsInvalid: [],
+      courseGradeIsInvalid: [],
     }
     this.handleClose = this.handleClose.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleCourseChange = this.handleCourseChange.bind(this);
     this.calculate = this.calculate.bind(this);
-  }
-
-  componentDidMount() {
-    document.title = "GPA Calculator";
   }
 
   handleClose() {
@@ -38,64 +41,104 @@ class GradeCalculator extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({
-      numCourses: event.target.value,
-    });
+    const name = event.target.name;
+    if (name.charAt(0) === "n") {
+      this.setState({
+        [name]: event.target.value,
+        courseCredits: this.state.courseCredits.length > 0 ? this.state.courseCredits.slice(0, parseInt(event.target.value)) : Array(parseInt(event.target.value)).fill(null),
+        courseGrades: this.state.courseGrades.length > 0 ? this.state.courseGrades.slice(0, parseInt(event.target.value)) : Array(parseInt(event.target.value)).fill(null),
+      });
+    }
+    else {
+      this.setState({
+        [name]: event.target.value,
+      });
+    }
+  }
+
+  handleCourseChange(event) {
+    const type = event.target.name.charAt(0);
+    const index = event.target.name.charAt(1);
+    if (type === "g") {
+      let courseGrades = [...this.state.courseGrades];
+      courseGrades[index] = event.target.value;
+      this.setState({
+        courseGrades: courseGrades,
+      });
+    }
+    else {
+      let courseCredits = [...this.state.courseCredits];
+      courseCredits[index] = parseFloat(event.target.value);
+      this.setState({
+        courseCredits: courseCredits,
+      });
+    }
   }
 
   calculate() {
     //validate inputs
     let isInvalid = Array(3).fill(false);
-    if (document.getElementById('curr').value && document.getElementById('curr').value < 0 && document.getElementById('curr').value > 4) {
-      isInvalid[0] = true;
-    }
-    if (document.getElementById('creditsEarned').value && document.getElementById('creditsEarned').value < 0) {
-      isInvalid[1] = true;
-    }
-    if (!document.getElementById('numberCourses').value || document.getElementById('numberCourses').value < 1) {
-      isInvalid[2] = true;
-    }
-    for (var bool = 0; bool < isInvalid.length; bool++) {
-      if (isInvalid[bool]) {
-        this.setState({
-          isInvalid: isInvalid,
-        });
-        return;
+    var coursesAreValid = true;
+    let courseCreditsIsInvalid = [];
+    let courseGradeIsInvalid = [];
+    isInvalid[0] = (this.state.currentGPA && (this.state.currentGPA < 0 || this.state.currentGPA > 4)) || (!this.state.currentGPA && this.state.creditsEarned);
+    isInvalid[1] = (this.state.creditsEarned && this.state.creditsEarned < 0) || (this.state.currentGPA && !this.state.creditsEarned);
+    isInvalid[2] = this.state.numCourses < 1;
+    if (this.state.numCourses > 0) {
+      courseCreditsIsInvalid = Array(this.state.numCourses).fill(false);
+      courseGradeIsInvalid = Array(this.state.numCourses).fill(false);
+      for (var i = 0; i < this.state.numCourses; i++) {
+        courseCreditsIsInvalid[i] = (this.state.courseCredits[i] && (this.state.courseCredits[i] < 1 || this.state.courseCredits[i] > 5)) || (!this.state.courseCredits[i] && this.state.courseGrades[i]);
+        courseGradeIsInvalid[i] = (this.state.courseGrades[i] && this.state.courseGrades[i] === "") || (this.state.courseCredits[i] && !this.state.courseGrades[i]);
       }
+      for (i = 0; i < this.state.numCourses; i++) {
+        if (courseCreditsIsInvalid[i] || courseGradeIsInvalid[i]) {
+          coursesAreValid = false;
+          break;
+        }
+      }
+    }
+    if (!coursesAreValid || isInvalid.some(bool => bool)) {
+      this.setState({
+        isInvalid: isInvalid,
+        courseCreditsIsInvalid: courseCreditsIsInvalid,
+        courseGradeIsInvalid: courseGradeIsInvalid,
+        gpa: "",
+      });
+      return;
     }
     //calculate current semester gpa
     var totalCredits = 0.0;
     var totalPoints = 0;
-    for (var i = 1; i <= this.state.numCourses; i++) {
-      var grade = 'c'.concat(i, 'Grade');
-      if (document.getElementById(grade).value) {
-        const letterGrade = document.getElementById(grade).value;
-        const coursePoints = LETTER_TO_NUMBER[letterGrade];
-
-        var id = 'c'.concat(i, 'Cred');
-        if (document.getElementById(id).value) {
-          var courseCredits = parseInt(document.getElementById(id).value);
-          totalPoints += parseFloat(coursePoints * courseCredits);
-          totalCredits += courseCredits;
-        }
+    for (i = 0; i < this.state.numCourses; i++) {
+      if (this.state.courseGrades[i]) {
+        const coursePoints = LETTER_TO_NUMBER[this.state.courseGrades[i]];
+        const courseCredits = this.state.courseCredits[i];
+        totalPoints += coursePoints * courseCredits;
+        totalCredits += courseCredits;
       }
     }
     //add existing GPA
-    if (document.getElementById('curr').value) {
-      totalPoints += parseFloat(document.getElementById('curr').value) * parseFloat(document.getElementById('creditsEarned').value);
-      totalCredits += parseInt(document.getElementById('creditsEarned').value);
+    if (this.state.currentGPA) {
+      totalPoints += this.state.currentGPA * this.state.creditsEarned;
+      totalCredits += parseFloat(this.state.creditsEarned);
     }
-    var gpa = parseFloat(totalPoints) / parseFloat(totalCredits);
+    var gpa = totalPoints / totalCredits;
     if (isNaN(gpa)) {
       this.setState({
         showModal: true,
         isInvalid: isInvalid,
+        courseCreditsIsInvalid: courseCreditsIsInvalid,
+        courseGradeIsInvalid: courseGradeIsInvalid,
+        gpa: "",
       });
     }
     else {
       this.setState({
         gpa: gpa,
         isInvalid: isInvalid,
+        courseCreditsIsInvalid: courseCreditsIsInvalid,
+        courseGradeIsInvalid: courseGradeIsInvalid,
       });
     }
   }
@@ -109,7 +152,7 @@ class GradeCalculator extends React.Component {
       <Form.Group as={Row} key={index}>
         <Form.Label column md="2">Course {index + 1}: </Form.Label>
         <Col>
-          <Form.Control id={"c" + (index + 1) + "Grade"} as="select" defaultValue="">
+          <Form.Control name={"g" + index} as="select" defaultValue="" onChange={this.handleCourseChange} isInvalid={this.state.courseGradeIsInvalid[index]}>
             <option value="">Course Grade</option>
             <option value="A">A</option>
             <option value="B+">B+</option>
@@ -119,9 +162,11 @@ class GradeCalculator extends React.Component {
             <option value="D">D</option>
             <option value="F">F</option>
           </Form.Control>
+          <Form.Control.Feedback type="invalid">Please select a letter grade.</Form.Control.Feedback>
         </Col>
         <Col>
-          <Form.Control placeholder="Course credits" id={"c" + (index + 1) + "Cred"} type="number" min="1" max="5" />
+          <Form.Control placeholder="Course credits" name={"c" + index} type="number" onChange={this.handleCourseChange} isInvalid={this.state.courseCreditsIsInvalid[index]} />
+          <Form.Control.Feedback type="invalid">This value must be between 1 and 5.</Form.Control.Feedback>
         </Col>
         <Col md="6"></Col>
       </Form.Group>
@@ -133,13 +178,7 @@ class GradeCalculator extends React.Component {
             <Modal.Title>Error</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            There was a problem calculating your GPA. Please check your input values. Potential causes:
-            <ul>
-              <li>No courses have been inputted.</li>
-              <li>Missing grade for course.</li>
-              <li>Missing credit hours for course.</li>
-              <li>Negative values.</li>
-            </ul>
+            There was a problem calculating your GPA. Please check your input values again.
           </Modal.Body>
           <Modal.Footer>
             <Button variant="primary" onClick={this.handleClose}>
@@ -154,7 +193,7 @@ class GradeCalculator extends React.Component {
             <Form.Group as={Row}>
               <Form.Label column md="2">Current GPA:</Form.Label>
               <Col>
-                <Form.Control id="curr" placeholder="Enter GPA" type="number" isInvalid={this.state.isInvalid[0]} />
+                <Form.Control name="currentGPA" onChange={this.handleChange} placeholder="Enter GPA" type="number" isInvalid={this.state.isInvalid[0]} />
                 <Form.Control.Feedback type="invalid">GPA must be a value between 0 and 4.</Form.Control.Feedback>
               </Col>
               <Col md="6"></Col>
@@ -162,15 +201,15 @@ class GradeCalculator extends React.Component {
             <Form.Group as={Row}>
               <Form.Label column md="2">Credits Earned:</Form.Label>
               <Col>
-                <Form.Control id="creditsEarned" placeholder="Enter completed credits" type="number" isInvalid={this.state.isInvalid[1]} />
-                <Form.Control.Feedback type="invalid">Completed credits must be a nonnegative number.</Form.Control.Feedback>
+                <Form.Control name="creditsEarned" onChange={this.handleChange} placeholder="Enter completed credits" type="number" isInvalid={this.state.isInvalid[1]} />
+                <Form.Control.Feedback type="invalid">Completed credits must be a nonempty, nonnegative number.</Form.Control.Feedback>
               </Col>
               <Col md="6"></Col>
             </Form.Group>
             <Form.Group as={Row}>
               <Form.Label column md="4">How many courses are you taking this semester?</Form.Label>
               <Col>
-                <Form.Control id="numberCourses" onChange={this.handleChange} placeholder="Number of courses attempting" type="number" isInvalid={this.state.isInvalid[2]} />
+                <Form.Control name="numCourses" onChange={this.handleChange} placeholder="Number of courses attempting" type="number" isInvalid={this.state.isInvalid[2]} />
                 <Form.Control.Feedback type="invalid">You must supply at least one course.</Form.Control.Feedback>
               </Col>
               <Col md="4"></Col>
