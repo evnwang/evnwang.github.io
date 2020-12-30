@@ -9,21 +9,19 @@
 }
 .img1 {
 	background-image: url("../Assets/nyc_skyline.jpg");	
-	/*min-height: 300px;*/
 	min-height: 100vh;
 	height: 100%;
 	opacity: 0.9;
 }
 .img2 {
 	background-image: url("../Assets/mountain_landscape.jpg");	
-	/*min-height: 500px;*/
 	min-height: 100vh;
+	height: 100%;
 	opacity: 0.9;
 }
 .img3 {
 	background-image:url("../Assets/shanghai_skyline.jpg");
 	min-height: 100vh;
-	/*min-height: 600px;*/
 	opacity: 0.9;
 }
 /* Section Headers */
@@ -104,6 +102,9 @@
 	display:inline-block;
 	width:40px;
 	height:40px;
+}
+.center:hover{
+	transform: scale(1.4);
 }
 .link-container{
 	position: absolute;

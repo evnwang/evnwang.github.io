@@ -32,16 +32,26 @@ export default function MainPage() {
         </div>
         <div className="about">
           <div className="border">
-            Hi, I am currently a student at Rutgers University - New Brunswick pursuing a Bachelor's degree in computer
-            science with a minor in mathematics.
-        <br />
-            <br />
-        Avid back-end and full-stack developer.
-        <br />
-            <br />
-        My hobbies and interests include playing and watching sports as well as hiking. I enjoy being active when I'm
-        not working inside. Feel free to reach out!
-      </div>
+            <h5>Education</h5>
+            <ul>
+              <li>Rutgers University: B.S. Degree in Computer Science, Minor in Mathematics</li>
+              <li>Relevant Coursework: Linear Algebra, Data Structures, Databases, Design and Analysis of Alorgorithms, Computer Architecture, Software Methodology, Software Engineering, Data Science</li>
+            </ul>
+            <h5>Experience</h5>
+            <ul>
+              <li>Amazon.com, Inc. - Software Development Engineering Intern</li>
+              <li>Rutgers School of Social Work - Application Developer</li>
+            </ul>
+            <h5>Skills</h5>
+            <ul>
+              <li>Back-end and full-stack development</li>
+              <li>Java, Kotlin, Python, C, C#, Javascript, HTML/CSS, SQL</li>
+            </ul>
+            <h5>Interests/Hobbies</h5>
+            <ul>
+              <li>In my free time, I enjoy being active. I am a big sports fanatic as I both play and watch sports. I also like hiking and being around nature.</li>
+            </ul>
+          </div>
         </div>
       </div>
       <div id="proj" className="img3">
@@ -49,8 +59,9 @@ export default function MainPage() {
           <span className="border">Projects</span>
         </div>
         <a className="proj" style={{ top: "20%" }} href="https://customizablechess.web.app/" target="_blank" rel="noreferrer">Customizable Chess</a>
-        <Link className="proj" style={{ top: "30%" }} to="/gradecalculator">GPA Calculator</Link>
-        <div className="proj" style={{ top: "40%" }}>BuyMe Auction Site</div>
+        <a className="proj" style={{ top: "30%" }} href="https://github.com/fireteam99/buyme">BuyMe Auction Site</a>
+        <a className="proj" style={{ top: "40%" }} href="https://github.com/RGT123/PrinProgProject">Dog Matcher</a>
+        <Link className="proj" style={{ top: "50%" }} to="/gradecalculator">GPA Calculator</Link>
       </div>
       <div id="contact" className="img1">
         <div className="header4">
@@ -65,7 +76,7 @@ export default function MainPage() {
           </a>
         </div>
         <div className="email">
-          <span className="border">Email: evan.wang@rutgers.edu</span>
+          <span className="border">Email: wangevan.ew@gmail.com</span>
         </div>
       </div>
     </div>
