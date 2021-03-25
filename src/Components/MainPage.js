@@ -132,9 +132,6 @@ export default function MainPage() {
             <img src={linkedin} className="center" alt="linkedin-icon" />
           </a>
         </div>
-        <div className="email">
-          <span className="border">Email: wangevan.ew@gmail.com</span>
-        </div>
       </div>
     </div>
   );
